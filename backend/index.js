@@ -7,13 +7,13 @@ const todos = require("./apis.js");
 const port = process.env.PORT || 3000;
 const mongoUrl = process.env.MONGO_URI;
 
-// Configure CORS to allow requests from specific origins
-const corsOptions = {
-  origin:'https://full-stack-todo-app-sigma.vercel.app/', // Replace '*' with your frontend's URL in production
-  optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
+app.use(cors(
+    {
+        origin:['https://full-stack-todo-app-sigma.vercel.app/'],
+        methods:["POST","PATCH","GET","DELETE"],
+        credentials:"true"
+    }
+));
 app.use(express.json());
 app.use("/todos", todos);
 
