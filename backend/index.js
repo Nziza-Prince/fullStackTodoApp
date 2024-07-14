@@ -10,8 +10,7 @@ const mongoUrl = process.env.MONGO_URI;
 app.use(cors(
     {
         origin:['https://full-stack-todo-app-sigma.vercel.app/'],
-        methods:["POST","PATCH","GET","DELETE"],
-        credentials:"true"
+        methods:["POST","PATCH","GET","DELETE"]
     }
 ));
 app.use(express.json());
