@@ -6,14 +6,7 @@ require("dotenv").config();
 const todos = require("./apis.js");
 const port = process.env.PORT || 3000;
 const mongoUrl = process.env.MONGO_URI;
-app.use(cors(
-    {
-        origin:['https://full-stack-todo-app-r9wu.vercel.app'],
-        methods:["POST","PATCH","GET","DELETE"],
-        credentials : true,
-        allowedHeaders: ['Content-Type', 'Authorization']
-    }
-));
+app.use(cors());
 
 app.use(express.json());
 app.use("/todos", todos);
