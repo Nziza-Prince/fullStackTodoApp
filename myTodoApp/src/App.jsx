@@ -12,9 +12,9 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
-
+  const backendUrl = import.meta.env.VITE_UBASE_URL 
   useEffect(() => {
-    axios.get("http://localhost:3000/todos")
+    axios.get(`${backendUrl}`)
       .then(res => {
         setTasks(res.data);
         setLoading(false);
@@ -26,7 +26,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3000/todos", { title: task, completed: false })
+    axios.post(`${backendUrl}`, { title: task, completed: false })
       .then(res => {
         setTasks([...tasks, res.data]);
         setTask("");
@@ -37,7 +37,7 @@ function App() {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:3000/todos/${id}`)
+    axios.delete(`${backendUrl}/${id}`)
       .then(() => {
         setTasks(tasks.filter(task => task._id !== id));
       })
@@ -48,7 +48,7 @@ function App() {
 
   const handleComplete = (id) => {
     const task = tasks.find(task => task._id === id);
-    axios.patch(`http://localhost:3000/todos/${id}`, { completed: !task.completed })
+    axios.patch(`${backendUrl}/${id}`, { completed: !task.completed })
       .then(response => {
         setTasks(tasks.map(task => task._id === id ? response.data : task));
       })
@@ -63,7 +63,7 @@ function App() {
   };
 
   const handleSaveEdit = (editedTask) => {
-    axios.patch(`http://localhost:3000/todos/${editedTask._id}`, editedTask)
+    axios.patch(`${backendUrl}/${editedTask._id}`, editedTask)
       .then(response => {
         setTasks(tasks.map(task => task._id === editedTask._id ? response.data : task));
       })
