@@ -12,7 +12,10 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
-  const backendUrl = import.meta.env.VITE_UBASE_URL 
+  const [error, setError] = useState(""); // State for error message
+
+  const backendUrl = import.meta.env.VITE_UBASE_URL;
+  
   useEffect(() => {
     axios.get(`${backendUrl}`)
       .then(res => {
@@ -26,6 +29,12 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (task.trim() === "") { // Check if the input is empty
+      setError("Please enter a task"); // Set error message
+      return;
+    }
+    setError(""); // Clear error message if input is not empty
+
     axios.post(`${backendUrl}`, { title: task, completed: false })
       .then(res => {
         setTasks([...tasks, res.data]);
@@ -91,6 +100,7 @@ function App() {
       <h1 className='mb-10 text-5xl font-bold'>ToDoList</h1>
       <form action="" className='mb-10' onSubmit={handleSubmit}>
         <div className='flex flex-col'>
+      {error && <p className='text-left ml-2 text-red-500 mt-2 font-bold text-2xl'>{error}</p>} {/* Render error message */}
           <label htmlFor="Task" className='text-left ml-3 font-bold'>Add Todo</label>
           <input
             onChange={(e) => setTask(e.target.value)}
@@ -111,7 +121,7 @@ function App() {
       {tasks.length === 0 ?
         (<p className='font-bold text-lg'>No Tasks to display</p>) :
         (tasks.map((task) => (
-          <div key={task._id} className='flex justify-between bg-white p-5 mb-1'>
+          <div key={task._id} className='flex justify-between bg-white p-5 mb-1 hover:hovered-card rounded-md'>
             <p className={`font-bold text-xl ${task.completed ? 'line-through' : 'line-clamp-none'}`}>{task.title}</p>
             <div className='flex gap-10'>
               <IoMdCheckmark
@@ -122,7 +132,7 @@ function App() {
                 onClick={() => handleDelete(task._id)}
                 className='font-bold text-xl hover:cursor-pointer'
               />
-              <MdModeEditOutline onClick={()=> handleEdit(task)} className='font-bold text-xl hover:cursor-pointer'/>
+              <MdModeEditOutline onClick={() => handleEdit(task)} className='font-bold text-xl hover:cursor-pointer'/>
             </div>
           </div>
         )))
@@ -133,6 +143,7 @@ function App() {
         task={selectedTask}
         onSave={handleSaveEdit}
       />
+      <p className='font-bold'>made with love by nzizaprince for nzizaprince</p>
     </div>
   );
 }
