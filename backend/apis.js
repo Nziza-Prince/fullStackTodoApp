@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Todo = require("./models.js");
 
-
 router.get("/", async (req, res) => {
   try {
     const todos = await Todo.find();
@@ -24,7 +23,7 @@ router.get("/:id", async (req, res) => {
     res.status(500).send(err);
   }
 });
-//creating a todo 
+
 router.post("/", async (req, res) => {
   const todo = new Todo({
     title: req.body.title,
@@ -37,6 +36,7 @@ router.post("/", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
 router.patch("/:id", async (req, res) => {
   try {
     const todo = await Todo.findById(req.params.id);
@@ -69,7 +69,7 @@ router.delete("/:id", async (req, res) => {
     }
   });
   
-  router.get("/status/incomplete", async (req, res) => {
+router.get("/status/incomplete", async (req, res) => {
     try {
       const incompleteTodos = await Todo.find({ completed: false });
       res.send(incompleteTodos);
@@ -78,8 +78,8 @@ router.delete("/:id", async (req, res) => {
     }
   });
   
-  // Fetch complete tasks
-  router.get("/status/complete", async (req, res) => {
+
+router.get("/status/complete", async (req, res) => {
     try {
       const completeTodos = await Todo.find({ completed: true });
       res.send(completeTodos);
