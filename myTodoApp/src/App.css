@@ -60,7 +60,7 @@
   width: 8px;
   height: 8px;
   margin: 0 4px;
-  background: black;
+  background: rgb(34, 34, 34);
   border-radius: 50%;
   animation: wave 1.2s infinite ease-in-out;
 }

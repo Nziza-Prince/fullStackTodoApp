@@ -121,7 +121,7 @@ function App() {
       {tasks.length === 0 ?
         (<p className='font-bold text-lg'>No Tasks to display</p>) :
         (tasks.map((task) => (
-          <div key={task._id} className='flex justify-between bg-white p-5 mb-1 hover:hovered-card rounded-md'>
+          <div key={task._id} className='flex justify-between bg-white p-5 mb-1 rounded-md'>
             <p className={`font-bold text-xl ${task.completed ? 'line-through' : 'line-clamp-none'}`}>{task.title}</p>
             <div className='flex gap-10'>
               <IoMdCheckmark
