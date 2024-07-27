@@ -14,7 +14,7 @@ function App() {
   const [selectedTask, setSelectedTask] = useState(null);
   const [error, setError] = useState(""); // State for error message
 
-  const backendUrl = import.meta.env.VITE_UBASE_URL || "https://fullstacktodoapp-ih0t.onrender.com";
+  const backendUrl = import.meta.env.VITE_UBASE_URL || "https://fullstacktodoapp-ih0t.onrender.com/todos";
   
   useEffect(() => {
     axios.get(`${backendUrl}`)
